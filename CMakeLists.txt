@@ -13,7 +13,7 @@ project(vrpn-balance-board)
 # Perform build configuration of dependencies
 ###
 
-find_package(Qt4 COMPONENTS QtCore QtGui qtmain REQUIRED)
+find_package(Qt4 COMPONENTS QtCore QtGui QtSvg qtmain REQUIRED)
 
 set(VRPN_BUILD_CLIENT_LIBRARY TRUE CACHE INTERNAL "" FORCE)
 add_subdirectory(vrpn)
