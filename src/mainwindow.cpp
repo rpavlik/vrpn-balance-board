@@ -25,6 +25,7 @@
 #include <QtGui/QApplication>
 #include <QInputDialog>
 #include <vrpn_QAnalogRemote.h>
+#include <vrpn_QButtonRemote.h>
 
 // Standard includes
 // - none
@@ -47,7 +48,8 @@ int main(int argc, char *argv[]) {
 //    channel[70] = Balance board: center of gravity y, in [-1, 1]
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
-	, ui(new Ui::MainWindow) {
+	, ui(new Ui::MainWindow)
+	, _zero(0.0, 4) {
 	ui->setupUi(this);
 	_fields.push_back(ui->frontLeft);
 	_fields.push_back(ui->frontRight);
@@ -68,18 +70,38 @@ void MainWindow::on_actionConnect_triggered() {
 
 	_container.stop();
 	_container.clear();
-	vrpn_QAnalogRemote * remote = _container.add(new vrpn_QAnalogRemote(server));
-	connect(remote, SIGNAL(analogReport(QList<double>)), this, SLOT(analogReport(QList<double>)));
+
+	// Analog for values
+	vrpn_QAnalogRemote * analog = _container.add(new vrpn_QAnalogRemote(server));
+	connect(analog, SIGNAL(analogReport(QList<double>)), this, SLOT(analogReport(QList<double>)));
+
+	// Button to detect front panel button AKA A button for zeroing.
+	vrpn_QButtonRemote * button = _container.add(new vrpn_QButtonRemote(server));
+	connect(button, SIGNAL(buttonReleased(int)), this, SLOT(rezeroButton(int)));
+
 	_container.start();
+}
+
+
+void MainWindow::rezeroButton(int) {
+	if (_last.size() == 0) {
+		return;
+	}
+	_zero = _last;
 }
 
 void MainWindow::_setKg(QLineEdit * field, double kg) {
 	static const QString formatString("%1 kg");
-	field->setText(formatString.arg(kg, 4));
+	field->setText(formatString.arg(kg, 6, 'f', 3));
 }
 
 void MainWindow::analogReport(QList<double> channels) {
+	_last.resize(4);
 	for (int i = 0; i < 4; ++i) {
-		_setKg(_fields[i], channels[64 + i]);
+		_last[i] = channels[64 + i];
+	}
+	DoubleArray adjusted = _last - _zero;
+	for (int i = 0; i < 4; ++i) {
+		_setKg(_fields[i], adjusted[i]);
 	}
 }

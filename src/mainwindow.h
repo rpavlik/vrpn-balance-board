@@ -31,6 +31,7 @@
 
 // Standard includes
 #include <vector>
+#include <valarray>
 
 namespace Ui {
 	class MainWindow;
@@ -47,12 +48,18 @@ class MainWindow : public QMainWindow {
 	public slots:
 		void on_actionConnect_triggered();
 		void analogReport(QList<double> channels);
+		void rezeroButton(int);
 
 	private:
+		typedef std::valarray<double> DoubleArray;
 		void _setKg(QLineEdit * field, double kg);
+		
+
 		Ui::MainWindow *ui;
-		std::vector<QLineEdit*> _fields;
+		DoubleArray _zero;
+		DoubleArray _last;
 		vrpn_QMainloopContainer _container;
+		std::vector<QLineEdit*> _fields;
 };
 
 
