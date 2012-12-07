@@ -26,10 +26,35 @@
 // - none
 
 // Library/third-party includes
-// - none
+#include <QMainWindow>
+#include <vrpn_QMainloopContainer.h>
 
 // Standard includes
-// - none
+#include <vector>
+
+namespace Ui {
+	class MainWindow;
+}
+class QLineEdit;
+
+class MainWindow : public QMainWindow {
+		Q_OBJECT
+
+	public:
+		explicit MainWindow(QWidget *parent = 0);
+		~MainWindow();
+
+	public slots:
+		void on_actionConnect_triggered();
+		void analogReport(QList<double> channels);
+
+	private:
+		void _setKg(QLineEdit * field, double kg);
+		Ui::MainWindow *ui;
+		std::vector<QLineEdit*> _fields;
+		vrpn_QMainloopContainer _container;
+};
+
 
 #endif // INCLUDED_mainwindow_h_GUID_49C47E36_F14E_4A98_6059_2A4E40DF79C3
 
