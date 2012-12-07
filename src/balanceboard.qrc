@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="wiibrew">
+    <file>WiiBalanceBoard.svg</file>
+  </qresource>
+</RCC>
