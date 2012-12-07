@@ -27,6 +27,9 @@
 
 // Library/third-party includes
 #include <QMainWindow>
+#include <QPointF>
+#include <QSharedPointer>
+
 #include <vrpn_QMainloopContainer.h>
 
 // Standard includes
@@ -36,7 +39,10 @@
 namespace Ui {
 	class MainWindow;
 }
+
 class QLineEdit;
+class QGraphicsScene;
+class QGraphicsEllipseItem;
 
 class MainWindow : public QMainWindow {
 		Q_OBJECT
@@ -50,14 +56,24 @@ class MainWindow : public QMainWindow {
 		void analogReport(QList<double> channels);
 		void rezeroButton(int);
 
+		void updateViewFit();
+
+
 	private:
 		typedef std::valarray<double> DoubleArray;
+
+		void _rezero();
 		void _setKg(QLineEdit * field, double kg);
+		QPointF _getCenterOfGravity();
 		
+		void _updateShowingCenterOfGravity();
 
 		Ui::MainWindow *ui;
 		DoubleArray _zero;
 		DoubleArray _last;
+		DoubleArray _lastAdjusted;
+		QSharedPointer<QGraphicsScene> _scene;
+		QGraphicsEllipseItem * _point;
 		vrpn_QMainloopContainer _container;
 		std::vector<QLineEdit*> _fields;
 };
