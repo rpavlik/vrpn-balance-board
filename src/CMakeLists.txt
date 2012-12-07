@@ -1,4 +1,4 @@
-
+#include_directories(${QCP_DIR})
 set(SOURCES
 	mainwindow.cpp)
 
@@ -25,6 +25,7 @@ add_definitions(${VRPN_DEFINITIONS})
 add_executable(vrpn-balance-board
 	WIN32
 	MACOSX_BUNDLE
+	#${QCP_SOURCES}
 	${SOURCES}
 	${MOCS}
 	${GENERATED_SOURCES})

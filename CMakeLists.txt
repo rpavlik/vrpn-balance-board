@@ -24,6 +24,9 @@ add_definitions(${VRPN_DEFINITIONS} -DVRPN_CLIENT_ONLY)
 
 add_subdirectory(qvrpn)
 
+set(QCP_DIR ${CMAKE_CURRENT_SOURCE_DIR}/QCP)
+set(QCP_SOURCES ${QCP_DIR}/qcustomplot.cpp ${QCP_DIR}/qcustomplot.h)
+
 ###
 # Build the project
 ###
