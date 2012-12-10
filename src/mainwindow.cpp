@@ -125,10 +125,12 @@ void MainWindow::analogReport(QList<double> channels) {
 	for (int i = 0; i < 4; ++i) {
 		_setKg(_fields[i], _lastAdjusted[i]);
 	}
+
+	_updateShowingCenterOfGravity();
 }
 
 void MainWindow::_updateShowingCenterOfGravity() {
-	if (_lastAdjusted.min() > 0) {
+	if (_lastAdjusted.max() > 0) {
 		_point->show();
 		QPointF pos = _getCenterOfGravity();
 		_point->setPos(pos);
