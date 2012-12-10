@@ -76,7 +76,11 @@ MainWindow::~MainWindow() {
 
 void MainWindow::on_actionConnect_triggered() {
 
-	QString server = QInputDialog::getText(this, QLatin1String("Connect to VRPN Server"), QLatin1String("Enter VRPN device and server to use"));
+	QString server = QInputDialog::getText(this,
+		QLatin1String("Connect to VRPN Server"),
+		QLatin1String("Enter VRPN device and server to use"),
+		QLineEdit::Normal,
+		QString("BalanceBoard@metal-devices.vrac.iastate.edu:3800"));
 	if (server.isNull()) {
 		return;
 	}
