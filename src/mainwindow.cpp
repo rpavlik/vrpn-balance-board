@@ -130,9 +130,13 @@ void MainWindow::analogReport(QList<double> channels) {
 void MainWindow::_updateShowingCenterOfGravity() {
 	if (_lastAdjusted.min() > 0) {
 		_point->show();
-		_point->setPos(_getCenterOfGravity());
+		QPointF pos = _getCenterOfGravity();
+		_point->setPos(pos);
+		static const QString format("(%1, %2)");
+		ui->centerOfGravity->setText(format.arg(pos.x(), 6, 'f', 3).arg(pos.y(), 6, 'f', 3));
 	} else {
 		_point->hide();
+		ui->centerOfGravity->setText("");
 	}
 }
 
