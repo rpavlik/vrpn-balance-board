@@ -184,7 +184,7 @@ void MainWindow::_setKg(QLineEdit * field, double kg) {
 QPointF MainWindow::_getCenterOfGravity() {
 	static const double xcoords_data[4] = {-1, 1, -1, 1};
 	static const DoubleArray xcoords(xcoords_data, 4);
-	static const double ycoords_data[4] = {1, 1, -1, -1};
+	static const double ycoords_data[4] = {-1, -1, 1, 1};
 	static const DoubleArray ycoords(ycoords_data, 4);
 
 	double total = _lastAdjusted.sum();
@@ -192,5 +192,5 @@ QPointF MainWindow::_getCenterOfGravity() {
 
 	// Do a weighted average of X sensor coordinates (weighted by normalized weight)
 	// and the same for Y
-	return QPointF((normalized * xcoords).sum(), (normalized * xcoords).sum());
+	return QPointF((normalized * xcoords).sum(), (normalized * ycoords).sum());
 }
