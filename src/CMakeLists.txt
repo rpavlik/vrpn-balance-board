@@ -23,8 +23,6 @@ source_group("Generated Sources - Do Not Edit" FILES ${GENERATED_SOURCES})
 include_directories(${CMAKE_CURRENT_BINARY_DIR} ${VRPN_INCLUDE_DIRS} ${QVRPN_INCLUDE_DIRS})
 add_definitions(${VRPN_DEFINITIONS})
 add_executable(vrpn-balance-board
-	WIN32
-	MACOSX_BUNDLE
 	${SOURCES}
 	${MOCS}
 	${GENERATED_SOURCES})
